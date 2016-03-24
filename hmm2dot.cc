@@ -57,7 +57,7 @@ int main(int argc, char *argv[])
       if (i == j) continue;
       double weight = a[i][j];
       if (weight < threshold) continue;
-      fmsm << "q" << i << " -- " << "q" << j \
+      fmsm << "q" << i << " -> " << "q" << j \
         << fixed << setw(5) << setprecision(5) \
         << " [penwidth=" << 0.5 + 4 * weight \
         << " color=\"#000000" << hex << (int)(weight * 255) << dec << "\"" \
