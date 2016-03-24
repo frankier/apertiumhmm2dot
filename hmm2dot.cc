@@ -28,6 +28,7 @@ int main(int argc, char *argv[])
   tagger_data_hmm.read(fin);
   fclose(fin);
 
+  int i, j;
   vector<wstring> array_tags;
   double **a = tagger_data_hmm.getA();
   double **b = tagger_data_hmm.getB();
@@ -48,10 +49,17 @@ int main(int argc, char *argv[])
   fmsm << "node [margin=\"0,0\"];\n";
   // Nodes
   for (vector<wstring>::const_iterator tagi=array_tags.begin(); tagi!=array_tags.end(); tagi++) {
-    fmsm << "q" << (tagi - array_tags.begin()) << "[label=\"" << UtfConverter::toUtf8(*tagi) << "\"];\n";
+    i = tagi - array_tags.begin();
+    fmsm << "q" << (tagi - array_tags.begin())
+      << "[label=\"" << UtfConverter::toUtf8(*tagi) << "\"";
+    if (wcscmp((*tagi).c_str(), L"TAG_SENT") == 0) {
+      fmsm << " style=filled fillcolor=red";
+    } else if (i > N) {
+      fmsm << " style=filled fillcolor=blue";
+    }
+    fmsm << "];\n";
   }
   // Edges
-  int i, j;
   for (i=0;i<N;i++) {
     for (j=0;j<N;j++) {
       if (i == j) continue;
