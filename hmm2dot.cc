@@ -59,7 +59,7 @@ int main(int argc, char *argv[])
       if (weight < threshold) continue;
       fmsm << "q" << i << " -> " << "q" << j \
         << fixed << setw(5) << setprecision(5) \
-        << " [penwidth=" << 0.5 + 4 * weight \
+        << " [penwidth=" << 5 * weight \
         << " color=\"#000000" << hex << (int)(weight * 255) << dec << "\"" \
         << "];\n";
     }
@@ -71,22 +71,14 @@ int main(int argc, char *argv[])
   ofstream fobs;
   fobs.open(obsdot);
   fobs << "graph g {\n";
-  fobs << "overlap=expandxy;\n";
-  // Nodes & dummy edges
-  fobs << "edge [style=invis, weight=50, len=.2]";
-  fobs << "subgraph cluster_left {\n";
-  fobs << "left [pos=\"-1,0!\", color=red, style=invis];\n";
+  fobs << "rankdir=LR;\n";
+  fobs << "ranksep=10;\n";
+  fmsm << "node [margin=\"0,0\"];\n";
+  // Nodes
   for (vector<wstring>::const_iterator tagi=array_tags.begin(); tagi!=array_tags.end(); tagi++) {
     i = tagi - array_tags.begin();
     fobs << "q" << i << "[label=\"" << UtfConverter::toUtf8(*tagi) << "\"];\n";
   }
-  for (vector<wstring>::const_iterator tagi=array_tags.begin(); tagi!=array_tags.end(); tagi++) {
-    i = tagi - array_tags.begin();
-    fobs << "q" << i << " -- left;\n";
-  }
-  fobs << "}\n";
-  fobs << "subgraph cluster_right {";
-  fobs << "right [pos=\"1,0!\", color=blue, style=invis];";
   for (i=0;i<M;i++) {
     fobs << "o" << i << "[label=\"{";
     set<TTag> abgset = output[i];
@@ -97,23 +89,21 @@ int main(int argc, char *argv[])
         fobs << ", ";
       }
     }
-    fobs << "}\"]\n";
+    fobs << "}\"];\n";
   }
-  for (i=0;i<M;i++) {
-    fobs << "o" << i << " -- right;\n";
-  }
-  fobs << "}\n";
-  fobs << "edge [style=\"\", weight=1, len=10]";
   // Edges
+  int edges = N * M;
+  int curedge = 0;
   for (i=0;i<N;i++) {
     for (j=0;j<M;j++) {
       double weight = a[i][j];
       if (weight < threshold) continue;
       fobs << "q" << i << " -- " << "o" << j \
         << fixed << setw(5) << setprecision(5) \
-        << " [penwidth=" << 1 + 2 * weight \
-        << " color=\"#000000" << hex << (int)(weight * 255) << dec << "\"" \
+        << " [penwidth=" << 0 + 20 * weight \
+        << " color=\"" << (double)curedge / edges << " 1 1\"" \
         << "];\n";
+      curedge++;
     }
   }
   fobs << "}\n";
