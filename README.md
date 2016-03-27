@@ -32,6 +32,12 @@ Install libgts-dev and then compile GraphViz yourself for a better layout. If
 anyone can coax Graphviz into producing more readable layouts, a pull request
 would be very welcome!
 
+Also included
+-------------
+
+* trace-tagger-model - dump some info about a hmm tagger model
+* trace-tagger-spec - unfinished
+
 Caveats/TODO
 ------------
 
