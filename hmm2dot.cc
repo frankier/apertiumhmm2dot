@@ -6,7 +6,6 @@
 
 using namespace std;
 
-TaggerDataHMM tagger_data_hmm;
 
 int main(int argc, char *argv[])
 {
@@ -18,9 +17,9 @@ int main(int argc, char *argv[])
   double threshold = strtod(argv[2], NULL);
   char* msmdot = argv[3];
   char* obsdot = argv[4];
-  FILE* fin = NULL;
 
-  fin = fopen(probfile, "r");
+  FILE* fin = fopen(probfile, "r");
+  TaggerDataHMM tagger_data_hmm;
   if (!fin) {
     cerr<<"Error: cannot open file '"<<probfile<<"'\n";
     exit(-1);
@@ -100,18 +99,17 @@ int main(int argc, char *argv[])
     fobs << "}\"];\n";
   }
   // Edges
-  int edges = N * M;
   int curedge = 0;
   for (i=0;i<N;i++) {
     for (j=0;j<M;j++) {
-      double weight = a[i][j];
+      double weight = b[i][j];
+      curedge++;
       if (weight < threshold) continue;
       fobs << "q" << i << " -- " << "o" << j \
         << fixed << setw(5) << setprecision(5) \
         << " [penwidth=" << 0 + 20 * weight \
-        << " color=\"" << (double)curedge / edges << " 1 1\"" \
+        << " color=\"" << (double)i / N << " 1 1\"" \
         << "];\n";
-      curedge++;
     }
   }
   fobs << "}\n";
