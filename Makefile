@@ -1,4 +1,4 @@
-all: hmm2dot testambiguityclass
+all: hmm2dot trace-tagger-model
 
 hmm2dot: hmm2dot.cc
 	g++ -Wall -Wextra -Wno-sign-compare -I /usr/local/include/apertium-3.4 -I /usr/local/include/lttoolbox-3.3/ hmm2dot.cc -llttoolbox3 -lapertium3 -o hmm2dot

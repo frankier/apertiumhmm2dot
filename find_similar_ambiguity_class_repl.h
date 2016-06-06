@@ -1,4 +1,8 @@
 #include <stdlib.h>
+#include <apertium/tagger_data_hmm.h>
+#include <cwchar>
+#include <iostream>
+#include <sstream>
 
 set<TTag> find_similar_ambiguity_class(TaggerData &td, set<TTag> &c)
 {
@@ -31,7 +35,7 @@ void find_similar_ambiguity_class_repl(TaggerData &td)
   vector<wstring> array_tags = td.getArrayTags();
   string line = "";
   while (true) {
-    cout << "> ";
+    wcout << L"> ";
     if (!getline(cin, line, '\n')) {
       break;
     }
@@ -40,15 +44,15 @@ void find_similar_ambiguity_class_repl(TaggerData &td)
     TTag ttag;
     while (lineStream >> ttag) {
       if (ttag < 0 || ttag > array_tags.size()) {
-        cerr << "Out of range!\n";
+        wcerr << L"Out of range!\n";
         exit(EXIT_FAILURE);
       }
       ambiguity_class.insert(ttag);
     }
     print_ambiguity_class(array_tags, ambiguity_class);
     set<TTag> similar_ambiguity_class = find_similar_ambiguity_class(td, ambiguity_class);
-    cout << " -> ";
+    wcout << L" -> ";
     print_ambiguity_class(array_tags, similar_ambiguity_class);
-    cout << "\n";
+    wcout << L"\n";
   }
 }
