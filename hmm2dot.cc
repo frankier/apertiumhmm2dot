@@ -61,7 +61,6 @@ int main(int argc, char *argv[])
   // Edges
   for (i=0;i<N;i++) {
     for (j=0;j<N;j++) {
-      if (i == j) continue;
       double weight = a[i][j];
       if (weight < threshold) continue;
       fmsm << "q" << i << " -> " << "q" << j \
