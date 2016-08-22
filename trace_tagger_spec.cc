@@ -20,7 +20,7 @@ int main(int argc, char *argv[])
   // Read data
   TSXReader tsx_reader;
   tsx_reader.read(argv[1]);
-  TaggerData tagger_data = tsx_reader.getTaggerData();
+  TaggerData& tagger_data = tsx_reader.getTaggerData();
 
   print_tagger_data(tagger_data);
   find_similar_ambiguity_class_repl(tagger_data);
