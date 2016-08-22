@@ -35,14 +35,19 @@ would be very welcome!
 Also included
 -------------
 
+The following programs might be useful as small examples for those wanting to
+start working with Apertium's taggers.
+
 * trace-tagger-model - dump some info about a hmm tagger model
 * trace-tagger-spec - unfinished
+* trace-streamed-types - parse Apertium's stream format using m5w's parser and
+  print the result (used by the unigram taggers and the perceptron tagger)
+* trace-tagger-words - parse Apertium's stream format using the older HMM
+  parser and print the result. Needs a tsx.
 
 Caveats/TODO
 ------------
 
-* Versions and paths are hardcoded and may need to be changed in the Makefile
-  manually at the moment.
 * Should parse command line options better.
 * Shouldn't put implementation in header files.
 * Different Graphviz options could possibly produce better graph layout.
